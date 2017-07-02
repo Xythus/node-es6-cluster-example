@@ -10,12 +10,11 @@ class ThreadWatcher {
 		this.consecutiveDeathTimeout = null;
 
 		cluster.setupMaster({
-			exec: './EntryController.js'
+			exec: './src/EntryController.js'
 		});
 	}
 
 	forkWorker() {
-
 		let worker = cluster.fork();
 		worker.on('exit', (code, signal) => this.handleWorkerDeath(worker, code, signal));
 	}
@@ -40,7 +39,7 @@ class ThreadWatcher {
 	handleConsecutiveDeath() {
 		this.consecutiveDeaths++;
 
-		if (this.consecutiveDeathTimeout != null)
+		if (this.consecutiveDeathTimeout !== null)
 			clearTimeout(this.consecutiveDeathTimeout);
 
 		this.consecutiveDeathTimeout = setTimeout(() => {
@@ -58,7 +57,7 @@ class ThreadWatcher {
 
 		app.use('/', express.static(path.join(__dirname, 'panic-mode')));
 
-		app.listen(1903, function() {
+		app.listen(process.env.PORT || 8080, function() {
 			console.log(`Panic mode static files online`);
 		});
 	}

@@ -1,4 +1,4 @@
-let ThreadWatcher = require('./ThreadWatcher'),
+let ThreadWatcher = require('./src/ThreadWatcher'),
 	threadWatcher = new ThreadWatcher();
 
 threadWatcher.forkWorker();
